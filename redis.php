@@ -11,7 +11,7 @@ if($mywatchkey<$rob_total){
     //插入搶購的資料
     $redis->hSet("mywatchlist","user_id_".mt_rand(1, 9999),time());
     $redis->set("mywatchkey",$mywatchkey+1);
-    $rob_result = $redis->exec();
+    $rob_result = $redis->exec(); // 注意GET操作必须放在 WATCH 之后 否则会出现结果超卖
     if($rob_result){
         $mywatchlist = $redis->hGetAll("mywatchlist");
         echo "成功購買！<br/>";
